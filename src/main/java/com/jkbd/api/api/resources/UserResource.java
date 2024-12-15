@@ -1,4 +1,4 @@
-package com.jkbd.api.api.resource;
+package com.jkbd.api.api.resources;
 
 import com.jkbd.api.api.entity.Users;
 import com.jkbd.api.api.service.UserService;

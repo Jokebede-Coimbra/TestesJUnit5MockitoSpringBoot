@@ -3,6 +3,7 @@ package com.jkbd.api.api.config;
 import com.jkbd.api.api.entity.Users;
 import com.jkbd.api.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,9 +18,14 @@ public class LocalConfig {
     private UserRepository repository;
 
     @Bean
-    public void starDB() {
-        Users u1 = new Users(null, "Jayanne", "jay@mail.com", "123");
-        Users u2 = new Users(null, "Samarah", "sam@mail.com", "123");
-        repository.saveAll(List.of(u1, u2));
+    public CommandLineRunner startDB() {
+        return args -> {
+            Users u1 = new Users(null, "Jayanne", "jay@mail.com", "123");
+            Users u2 = new Users(null, "Samarah", "sam@mail.com", "456");
+
+            repository.saveAll(List.of(u1, u2));
+            System.out.println("Database initialized with test data.");
+        };
     }
+
 }
