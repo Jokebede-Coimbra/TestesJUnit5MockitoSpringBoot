@@ -1,6 +1,7 @@
 package com.jkbd.api.api.resources;
 
 import com.jkbd.api.api.dto.UsersDTO;
+import com.jkbd.api.api.entity.Users;
 import com.jkbd.api.api.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,12 @@ public class UserResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(userService.create(usersDTO).getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UsersDTO> update(@PathVariable Integer id, @RequestBody UsersDTO usersDTO) {
+        usersDTO.setId(id);
+        Users newUser = userService.update(usersDTO);
+        return ResponseEntity.ok().body(mapper.map(userService.update(usersDTO), UsersDTO.class));
     }
 }
