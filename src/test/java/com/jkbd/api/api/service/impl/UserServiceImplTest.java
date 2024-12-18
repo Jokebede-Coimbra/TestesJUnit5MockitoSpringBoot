@@ -3,6 +3,7 @@ package com.jkbd.api.api.service.impl;
 import com.jkbd.api.api.dto.UsersDTO;
 import com.jkbd.api.api.entity.Users;
 import com.jkbd.api.api.repositories.UserRepository;
+import com.jkbd.api.api.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -47,7 +48,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findById() {
+    void whenFindByIdThenReturnAnObjectFound() {
         when(userRepository.findById(anyInt())).thenReturn(optionalUsers);
 
         Users userResponse = userService.findById(ID);
@@ -55,6 +56,18 @@ class UserServiceImplTest {
         assertNotNull(userResponse);
         assertEquals(Users.class, userResponse.getClass());
         assertEquals(ID, userResponse.getId());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+
+        try {
+            userService.findById(ID);
+        } catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Objeto não encontrado", ex.getMessage());
+        }
     }
 
     @Test
