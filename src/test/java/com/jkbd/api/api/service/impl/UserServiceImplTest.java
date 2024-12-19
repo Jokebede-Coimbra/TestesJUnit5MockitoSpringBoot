@@ -31,7 +31,6 @@ class UserServiceImplTest {
     public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
     public static final int INDEX = 0;
     public static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
-    public static final String OBJETO_NAO_ENCONTRADO1 = "Objeto nao encontrado";
 
 
     @InjectMocks
@@ -151,7 +150,7 @@ class UserServiceImplTest {
     void deleteWithSuccess() {
         when(userRepository.findById(anyInt())).thenReturn(optionalUsers);
         doNothing().when(userRepository).deleteById(anyInt());
-        userService.findById(ID);
+        userService.delete(ID);
         verify(userRepository, times(1)).deleteById(anyInt());
     }
 
