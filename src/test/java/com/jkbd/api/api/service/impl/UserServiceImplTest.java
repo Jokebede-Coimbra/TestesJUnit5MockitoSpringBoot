@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -105,6 +105,7 @@ class UserServiceImplTest {
         assertEquals(PASSWORD, usersResponse.getPassword());
 
     }
+
     @Test
     void whenCreateThenReturnAnDataIntegrityViolationException() {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUsers);
@@ -112,7 +113,7 @@ class UserServiceImplTest {
         try {
             optionalUsers.get().setId(2);
             userService.create(usersDTO);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
@@ -139,14 +140,18 @@ class UserServiceImplTest {
         try {
             optionalUsers.get().setId(2);
             userService.create(usersDTO);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
 
     @Test
-    void delete() {
+    void deleteWithSuccess() {
+        when(userRepository.findById(anyInt())).thenReturn(optionalUsers);
+        doNothing().when(userRepository).deleteById(anyInt());
+        userService.findById(ID);
+        verify(userRepository, times(1)).deleteById(anyInt());
     }
 
     private void startUsers() {
