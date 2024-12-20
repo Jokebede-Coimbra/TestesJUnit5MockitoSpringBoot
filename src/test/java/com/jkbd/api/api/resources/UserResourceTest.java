@@ -29,9 +29,8 @@ class UserResourceTest {
     public static final String NAME = "Jayanne";
     public static final String EMAIL = "jay@gmail.com";
     public static final String PASSWORD = "123";
-    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
     public static final int INDEX = 0;
-    public static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
+
     private Users users;
     private UsersDTO usersDTO;
 
